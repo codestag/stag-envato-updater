@@ -13,8 +13,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-StagTools powers your WordPress website with some regularly needed shortcodes including buttons, columns, alerts, font icons etc. It also includes several widgets and custom post types (only for Codestag Themes).
+Stag Envato Updater is a simple plugin which makes it easy to keep ThemeForest themes all upto date, works with multisite as well.
 
+Great for both theme authors, and buyers.
 
 = Get Involved =
 If you are a developer, you can contribute to the source code on [Github Repository](https://github.com/Codestag/stag-envato-updater)

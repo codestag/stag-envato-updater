@@ -63,7 +63,66 @@ final class Stag_Envato_Updater {
 	function __construct() {
 		$this->options = get_option('seu_options');
 
-		add_action( 'admin_init', array( $this, 'add_settings' ) );
+		if( is_multisite() ) {
+			$this->options = array(
+				'username' => get_site_option('username'),
+				'api_key'  => get_site_option('api_key')
+			);
+
+			add_action( 'wpmu_options', array( $this, 'show_network_settings' ) );
+			add_action( 'update_wpmu_options', array( $this, 'save_network_settings' ) );
+		} else {
+			add_action( 'admin_init', array( $this, 'add_settings' ) );
+		}
+
+		add_filter( 'pre_set_site_transient_update_themes', array( $this, 'check_for_update' ) );
+	}
+
+	public function check_for_update( $transient ) {
+
+		if ( isset($this->authors) && ! is_array( $this->authors ) ) {
+			$this->authors = array($this->authors);
+		}
+
+		if ( !isset($transient->checked) ) return $transient;
+
+		if ( ! class_exists( "Envato_Protected_API" ) ) {
+			require_once( "lib/class-envato-protected-api.php" );
+		}
+
+		$api = new Envato_Protected_API( $this->options['username'], $this->options['api_key'] );
+		
+		$purchased = $api->wp_list_themes( true );
+
+		$installed = function_exists( "wp_get_themes" ) ? wp_get_themes() : get_themes();
+		$filtered = array();
+
+		foreach ( $installed as $theme ) {
+			if ( isset($this->authors) && ! in_array( $theme->{'Author Name'}, $this->authors ) )
+				continue;
+			$filtered[$theme->Name] = $theme;
+		}
+
+		foreach ( $purchased as $theme ) {
+			if ( isset( $filtered[$theme->theme_name] ) ) {
+				// gotcha, compare version now
+				$current = $filtered[$theme->theme_name];
+				if ( version_compare( $current->Version, $theme->version, '<' ) ) {
+					// bingo, inject the update
+					if ( $url = $api->wp_download( $theme->item_id ) ) {
+						$update = array(
+							"url"         => "http://themeforest.net/item/theme/{$theme->item_id}",
+							"new_version" => $theme->version,
+							"package"     => $url
+						);
+
+						$transient->response[$current->Stylesheet] = $update;
+					}
+				}
+			}
+		}
+
+		return $transient;
 	}
 
 	/**
@@ -110,12 +169,48 @@ final class Stag_Envato_Updater {
 	 * @return void
 	 */
 	function api_key_settings() {
+		$val = '';
+
 		printf(
 			'<input name="seu_options[api_key]" id="seu_options[api_key]" type="text" value="%1$s" class="regular-text" />
 			<p class="description">%2$s</p>',
 			( isset( $this->options['api_key'] ) ? esc_attr( $this->options['api_key'] ) : '' ),
 			__( 'Enter your ThemeForest account API Key here.', 'seu' )
 		);
+	}
+
+	public function show_network_settings() {
+		printf( '<h3>%1$s</h3>', __( 'Stag Envato Updater Settings', 'seu' ) );
+
+		self::settings_description();
+		?>
+
+		<table class="form-table">
+			<tbody>
+				<tr valign="top">
+					<th scope="row"><label for="seu_options[username]"><?php _e( 'ThemeForest Username', 'seu' ); ?></label></th>
+					<td>
+						<?php self::username_settings(); ?>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label for="seu_options[api_key]"><?php _e( 'ThemeForest API Key', 'seu' ); ?></label></th>
+					<td>
+						<?php self::api_key_settings(); ?>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<?php
+	}
+
+	public function save_network_settings() {
+		$posted_settings  = array_map( 'sanitize_text_field', $_POST['seu_options'] );
+		 
+        foreach ( $posted_settings as $name => $value ) {
+            update_site_option( $name, $value );
+        }
 	}
 }
 

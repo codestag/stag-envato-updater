@@ -77,6 +77,7 @@ final class Stag_Envato_Updater {
 
 		add_filter( 'pre_set_site_transient_update_themes', array( $this, 'check_for_update' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array( $this, 'add_settings_link' ) );
+		add_action( 'plugins_loaded', array( $this, 'localization' ) );
 	}
 
 	/**
@@ -244,6 +245,16 @@ final class Stag_Envato_Updater {
 		array_push( $links, $settings );
 
 		return $links;
+	}
+
+	/**
+	 * Adds plugin localization
+	 * Domain: et_automatic_updates
+	 *
+	 * @return void
+	 */
+	function localization() {
+		load_plugin_textdomain( 'seu', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 }
 

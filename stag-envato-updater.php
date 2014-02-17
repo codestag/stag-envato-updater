@@ -78,6 +78,12 @@ final class Stag_Envato_Updater {
 		add_filter( 'pre_set_site_transient_update_themes', array( $this, 'check_for_update' ) );
 	}
 
+	/**
+	 * Sends a request to server, gets current plugins versions.
+	 * 
+	 * @param  object $transient Update transient option
+	 * @return object Update transient option
+	 */
 	public function check_for_update( $transient ) {
 
 		if ( isset($this->authors) && ! is_array( $this->authors ) ) {
@@ -179,6 +185,11 @@ final class Stag_Envato_Updater {
 		);
 	}
 
+	/**
+	 * Display settings panel on multisite.
+	 * 
+	 * @return void
+	 */
 	public function show_network_settings() {
 		printf( '<h3>%1$s</h3>', __( 'Stag Envato Updater Settings', 'seu' ) );
 
@@ -205,6 +216,11 @@ final class Stag_Envato_Updater {
 		<?php
 	}
 
+	/**
+	 * Save network settings.
+	 * 
+	 * @return void
+	 */
 	public function save_network_settings() {
 		$posted_settings  = array_map( 'sanitize_text_field', $_POST['seu_options'] );
 		 

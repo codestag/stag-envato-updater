@@ -9,7 +9,7 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
- A small plugin to keep your ThemeForest themes up to date.
+A simple plugin to keep your ThemeForest themes up to date.
 
 == Description ==
 
@@ -17,10 +17,18 @@ Stag Envato Updater is a simple plugin which makes it easy to keep ThemeForest t
 
 Great for both theme authors, and buyers.
 
-= Get Involved =
-If you are a developer, you can contribute to the source code on [Github Repository](https://github.com/Codestag/stag-envato-updater)
+= Setup =
+After installing the plugin, go to **Settings &rarr; General**, at the bottom of the page you will see **Stag Envato Updater Settings** with two fields for entering your ThemeForest account username and API key.
 
-*Checkout our finely tuned WordPress themes over at [Codestag](http://codestag.com).*
+If you are using multisite, there settings panel would appear under **Settings** on network site.
+
+= Support Policy =
+We'll do our best to keep this plugin up to date, fix bugs and implement features when possible, but technical support will only be provided for active Codestag customers. If you enjoy this plugin and would like to support its development, you can:
+
+* Help out on the [support forums](http://wordpress.org/support/stag-envato-updater/cue).
+* Consider [contributing on GitHub](https://github.com/codestag/stag-envato-updater).
+* [Leave a review](http://wordpress.org/support/view/plugin-reviews/stag-envato-updater#postform) and let everyone know how much you love it.
+* [Follow @Codestag](https://twitter.com/Codestag) on Twitter.
 
 == Screenshots ==
 
@@ -33,7 +41,7 @@ Install Stag Envato Updater like any other plugin. [Check out the codex](http://
 
 == Changelog ==
 
-= 1.0 - 02/15/2014 =
+= 1.0 - 02/17/2014 =
 * Initial Release
 
 == Upgrade Notice ==

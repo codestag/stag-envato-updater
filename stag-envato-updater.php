@@ -76,6 +76,7 @@ final class Stag_Envato_Updater {
 		}
 
 		add_filter( 'pre_set_site_transient_update_themes', array( $this, 'check_for_update' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array( $this, 'add_settings_link' ) );
 	}
 
 	/**
@@ -227,6 +228,22 @@ final class Stag_Envato_Updater {
         foreach ( $posted_settings as $name => $value ) {
             update_site_option( $name, $value );
         }
+	}
+
+	/**
+	 * Adds settings link to the plugin on WP-Admin / Plugins page
+	 *
+	 * @param array $links Default plugin links
+	 * @return array Plugin links
+	 */
+	function add_settings_link( $links ){
+		$settings = sprintf( '<a href="%1$s">%2$s</a>',
+			esc_url( admin_url( 'options-general.php#stag_envato_updater' ) ),
+			esc_html__( 'Settings', 'seu' )
+		);
+		array_push( $links, $settings );
+
+		return $links;
 	}
 }
 

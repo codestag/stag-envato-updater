@@ -1,14 +1,14 @@
 Stag Envato Updater
 ===
 
-Contributors: mauryaratan, codestag
-Donate link: http://codest.ag/st-donate
-Tags: themeforest, codestag, mauryaratan
-Requires at least: 3.5
-Tested up to: 3.8.1
-Stable tag: 1.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors: mauryaratan, codestag   
+Donate link: http://codest.ag/st-donate  
+Tags: themeforest, codestag, mauryaratan  
+Requires at least: 3.5  
+Tested up to: 3.8.1  
+Stable tag: 1.0  
+License: GPLv2 or later  
+License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
 A simple plugin to keep your ThemeForest themes up to date.
 

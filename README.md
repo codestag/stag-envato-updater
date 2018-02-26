@@ -1,6 +1,8 @@
 Stag Envato Updater
 ===
 
+This plugin is deprecated in favor of official plugin from Envato, please follow this link to get the plugin: http://envato.github.io/wp-envato-market/
+
 Contributors: mauryaratan, codestag   
 Donate link: http://codest.ag/st-donate  
 Tags: themeforest, codestag, mauryaratan  
